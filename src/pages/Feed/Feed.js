@@ -41,6 +41,8 @@ class Feed extends Component {
         this.addPost(data.post);
       }else if(data.action==='update'){
         this.updatepostIO(data.post);
+      }else if(data.action === 'delete'){
+        this.loadPosts();
       }
    });
   }
@@ -218,10 +220,7 @@ updatepostIO =  post => {
       })
       .then(resData => {
         console.log(resData);
-        this.setState(prevState => {
-          const updatedPosts = prevState.posts.filter(p => p._id !== postId);
-          return { posts: updatedPosts, postsLoading: false };
-        });
+        this.loadPosts();
       })
       .catch(err => {
         console.log(err);
